@@ -30,13 +30,8 @@ int main(){
   }
   else{
     char * line = shmat(shmid,0,0);
-    if (strlen(line)==0){
-      printf("insert first line :");
-    }
-    else{
-      printf("last line : %s", line);
-      printf("insert line : ");
-    }  
+    printf("last line : %s", line);
+    printf("insert line : "); 
     char dest[256];
     fgets(dest,256 ,stdin);//change 100 later
     int fd = open("story.txt", O_WRONLY | O_APPEND, 0644);
