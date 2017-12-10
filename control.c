@@ -21,7 +21,7 @@ int main(int argc, char * argv[]){
       if (semid < 0){
 	printf("semaphore already exists\n");
       }
-      if (shmid < 0){
+      else if (shmid < 0){
 	printf("shared memory already exists\n");
       }
       else{
@@ -31,10 +31,21 @@ int main(int argc, char * argv[]){
 	  unsigned short *array;
 	}un;
 	un.val = 1;
-	semctl(semid, 0, SETVAL, un.val);	
-	int fd = open("story.txt", O_CREAT | O_TRUNC, 0644);
-	close(fd);
-	printf("shared memory, semaphore, and file successfully created\n");
+	int ctl=semctl(semid, 0, SETVAL, un.val);
+	if (ctl <0){
+	  printf("failed to set value");
+	}
+	else{
+	  int fd = open("story.txt", O_CREAT | O_TRUNC, 0644);
+	  if (fd < 0){
+	    printf("file not created");
+	  }
+	  else{
+	    close(fd);
+	    printf("shared memory, semaphore, and file successfully created\n");
+	  }
+	}
+	
       }
     }
     else if (strcmp(argv[1], "-v")==0){
@@ -43,7 +54,7 @@ int main(int argc, char * argv[]){
       execlp("cat","cat","story.txt",NULL);
     }
     else if (strcmp(argv[1],"-r")==0){
-      int semid = semget(SEMKEY,1,0600);
+      int semid = semget(SEMKEY,1,0644);
       int r = semctl(semid,0,IPC_RMID);
       if (r < 0){
 	printf("semaphore doesn't exist\n");

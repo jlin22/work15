@@ -34,10 +34,11 @@ int main(){
     printf("insert line : "); 
     char dest[256];
     fgets(dest,256 ,stdin);//change 100 later
-    int fd = open("story.txt", O_WRONLY | O_APPEND, 0644);
+    int fd = open("story.txt", O_WRONLY | O_APPEND);
     write(fd, dest, strlen(dest));
     close(fd);
     strcpy(line,dest);
+    printf("story updated\n");
     buf.sem_op=1;
     semop(semid, &buf, 1);
     printf("semaphore released\n");
