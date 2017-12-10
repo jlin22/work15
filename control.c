@@ -25,7 +25,13 @@ int main(int argc, char * argv[]){
 	printf("shared memory already exists\n");
       }
       else{
-	semctl(semid, 0, SETVAL, 1);	
+	union semun{
+	  int val;
+	  struct semid_ds *buf;
+	  unsigned short *array;
+	}un;
+	un.val = 1;
+	semctl(semid, 0, SETVAL, un.val);	
 	int fd = open("story.txt", O_CREAT | O_TRUNC, 0644);
 	close(fd);
 	printf("shared memory, semaphore, and file successfully created\n");
@@ -43,7 +49,7 @@ int main(int argc, char * argv[]){
 	printf("semaphore doesn't exist\n");
       }
       else{
-	printf("semaphore removed : %d\n", r);
+	printf("semaphore removed \n");
       }
       int shmid = shmget(SHMKEY, sizeof(int), 0644);
       int s= shmctl(shmid, IPC_RMID,0);
@@ -51,7 +57,7 @@ int main(int argc, char * argv[]){
 	printf("shared memory doesn't exist\n");
       }
       else{
-      printf("shared memory removed : %d\n", s);
+      printf("shared memory removed\n");
       }
       int f = fork();
       int status;
@@ -62,13 +68,15 @@ int main(int argc, char * argv[]){
 	}
 	else{
 	  close(fd);
+	  printf("story removed\n");
 	  printf("story : \n");
 	  execlp("cat","cat","story.txt",NULL);
 	}
       }
       else{
-	wait(&status);
+	wait(&status);	
 	remove("story.txt");
+
       }
     }
     else{

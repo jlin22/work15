@@ -37,8 +37,8 @@ int main(){
       printf("last line : %s", line);
       printf("insert line : ");
     }  
-    char * dest;
-    fgets(dest,100 ,stdin);//change 100 later
+    char dest[256];
+    fgets(dest,256 ,stdin);//change 100 later
     int fd = open("story.txt", O_WRONLY | O_APPEND, 0644);
     write(fd, dest, strlen(dest));
     close(fd);
