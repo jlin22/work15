@@ -30,7 +30,7 @@ int main(){
   }
   else{
     char * line = shmat(shmid,0,0);
-    printf("last line : %s", line);
+    printf("last line : %s\n", line);
     printf("insert line : "); 
     char dest[256];
     fgets(dest,256 ,stdin);//change 100 later
