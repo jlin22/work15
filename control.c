@@ -17,7 +17,7 @@ int main(int argc, char * argv[]){
   if(argc==2){
     if (strcmp(argv[1],"-c")==0){
       int semid =semget(SEMKEY,1, IPC_CREAT | IPC_EXCL | 0644);
-      int shmid =shmget(SHMKEY, sizeof(int), IPC_CREAT | IPC_EXCL | 0600);
+      int shmid =shmget(SHMKEY, sizeof(int), IPC_CREAT | IPC_EXCL | 0644);
       if (semid < 0){
 	printf("semaphore already exists\n");
       }

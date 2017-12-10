@@ -15,7 +15,7 @@
 int main(){
   printf("trying to access resources\n");
   int semid = semget(SEMKEY, 1,0644);
-  int shmid = shmget(SHMKEY, 0, 0644);
+  int shmid = shmget(SHMKEY, sizeof(int), 0644);
   struct sembuf buf;
   buf.sem_num =0;
   buf.sem_op =-1;
