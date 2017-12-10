@@ -19,7 +19,10 @@ int main(int argc, char * argv[]){
       int semid =semget(SEMKEY,1, IPC_CREAT | IPC_EXCL | 0644);
       int shmid =shmget(SHMKEY, sizeof(int), IPC_CREAT | IPC_EXCL | 0600);
       if (semid < 0){
-	printf("stuff already exists\n");
+	printf("semaphore already exists\n");
+      }
+      if (shmid < 0){
+	printf("shared memory already exists\n");
       }
       else{
 	semctl(semid, 0, SETVAL, 1);	
@@ -58,7 +61,7 @@ int main(int argc, char * argv[]){
 	  printf("story doesn't exist \n");
 	}
 	else{
-	  close("story.txt");
+	  close(fd);
 	  printf("story : \n");
 	  execlp("cat","cat","story.txt",NULL);
 	}
