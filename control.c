@@ -9,9 +9,9 @@
 #include <fcntl.h>
 #include <sys/shm.h>
 #include <sys/wait.h>
-#define SEMKEY 4761
-#define SHMKEY 7921
-
+#define SEMKEY 8396
+#define SHMKEY 1947
+#define FILE_NAME "story.txt"
 
 int main(int argc, char * argv[]){
   if(argc==2){
@@ -36,7 +36,7 @@ int main(int argc, char * argv[]){
 	  printf("failed to set value");
 	}
 	else{
-	  int fd = open("story.txt", O_CREAT | O_TRUNC, 0644);
+	  /*int fd = open("story.txt", O_CREAT | O_TRUNC, 0644);
 	  if (fd < 0){
 	    printf("file not created");
 	  }
@@ -44,6 +44,9 @@ int main(int argc, char * argv[]){
 	    close(fd);
 	    printf("shared memory, semaphore, and file successfully created\n");
 	  }
+	  */
+	  FILE* str = fopen(FILE_NAME, "w");
+	  fclose(str);
 	}
 	
       }

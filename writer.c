@@ -9,8 +9,8 @@
 #include <fcntl.h>
 #include <sys/shm.h>
 #include <sys/wait.h>
-#define SEMKEY 4761
-#define SHMKEY 7921
+#define SEMKEY 8396
+#define SHMKEY 1947
 
 int main(){
   printf("trying to access resources\n");
