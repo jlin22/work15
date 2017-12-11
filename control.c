@@ -19,10 +19,10 @@ int main(int argc, char * argv[]){
       int semid =semget(SEMKEY,1, IPC_CREAT | IPC_EXCL | 0644);
       int shmid =shmget(SHMKEY, sizeof(int), IPC_CREAT | IPC_EXCL | 0644);
       if (semid < 0){
-	printf("semaphore already exists\n");
+	printf("failed to create semaphore\n");
       }
       else if (shmid < 0){
-	printf("shared memory already exists\n");
+	printf("failed to create shared memory\n");
       }
       else{
 	union semun{
@@ -42,11 +42,12 @@ int main(int argc, char * argv[]){
 	  }
 	  else{
 	    close(fd);
-	    printf("shared memory, semaphore, and file successfully created\n");
+	    
 	  }
 	  */
 	  FILE* str = fopen(FILE_NAME, "w");
 	  fclose(str);
+	  printf("shared memory, semaphore, and file successfully created\n");
 	}
 	
       }
@@ -60,7 +61,7 @@ int main(int argc, char * argv[]){
       int semid = semget(SEMKEY,1,0644);
       int r = semctl(semid,0,IPC_RMID);
       if (r < 0){
-	printf("semaphore doesn't exist\n");
+	printf("failed to remove semaphore\n");
       }
       else{
 	printf("semaphore removed \n");
@@ -68,7 +69,7 @@ int main(int argc, char * argv[]){
       int shmid = shmget(SHMKEY, sizeof(int), 0644);
       int s= shmctl(shmid, IPC_RMID,0);
       if (s < 0){
-	printf("shared memory doesn't exist\n");
+	printf("failed to remove shared memory\n");
       }
       else{
       printf("shared memory removed\n");
@@ -78,11 +79,11 @@ int main(int argc, char * argv[]){
       if (f==0){
 	int fd = open("story.txt", O_RDONLY);
         if (fd < 0){
-	  printf("story doesn't exist \n");
+	  printf("failed to access story.txt \n");
 	}
 	else{
 	  close(fd);
-	  printf("story removed\n");
+	  printf("story.txt removed\n");
 	  printf("story : \n");
 	  execlp("cat","cat","story.txt",NULL);
 	}
